@@ -902,6 +902,10 @@
                     + 'xmlns:Iptc4xmpExt="http://iptc.org/std/Iptc4xmpExt/2008-02-29/" '
                     + xmpString.slice(indexOfXmp)
 
+        // In some cases XMP data can have trailing null characters that
+        // trips up at least Firefox's XML parser
+        xmpString = xmpString.replace(/\0/g, '')
+
         var domDocument = dom.parseFromString( xmpString, 'text/xml' );
         return xml2Object(domDocument);
     }
